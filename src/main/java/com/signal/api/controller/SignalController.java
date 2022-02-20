@@ -66,6 +66,8 @@ public class SignalController {
 	public ResponseEntity<List<Signal>> findByRegion(@Param("nomRegion") String nomRegion){
 		if(nomRegion == null){
 			return ResponseEntity.ok(null);
+		}else if(nomRegion == "tout"){
+			return ResponseEntity.ok(signalRepository.findAll());
 		}
 		return ResponseEntity.ok(signalRepository.findByRegion(nomRegion));
 	}
