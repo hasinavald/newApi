@@ -99,7 +99,7 @@ public class SignalController {
 	}
 
 	@PutMapping("/update/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	public ResponseEntity<?> updateStatusSignal(@PathVariable("id") Long id, @RequestBody String status){
 		signalRepository.updateStatusSignal(status, id);
 		return ResponseEntity.ok(new MessageResponse("Update successfully"));
