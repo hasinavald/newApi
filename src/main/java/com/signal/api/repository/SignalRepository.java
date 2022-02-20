@@ -33,6 +33,12 @@ public interface SignalRepository extends JpaRepository<Signal, Long>{
 	@Query(value = "UPDATE signals SET seen = :seen WHERE id = :id", nativeQuery = true)
 	int updateSeenByClient(Long id, int seen);
 
+
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE signals SET seen = :seen WHERE id = :id", nativeQuery = true)
+	int updateSeenByClientno(Long id, int seen);
+
 	Optional<Signal> findById(Long id);
 
 	List<Signal> findBySeen(int seen);

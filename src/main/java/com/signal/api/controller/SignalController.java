@@ -91,6 +91,13 @@ public class SignalController {
 		return ResponseEntity.ok(new MessageResponse("Update successfully"));
 	}
 
+	@PutMapping("/client/seenno")
+	@PreAuthorize("hasRole('MODERATOR') or hasRole('USER')")
+	public ResponseEntity<?> updateSeenByClientno(@Param("id") Long id){
+		signalRepository.updateSeenByClientno(id,0);
+		return ResponseEntity.ok(new MessageResponse("Update successfully"));
+	}
+
 	@PutMapping("/updateRegion/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateRegionSignal(@PathVariable("id") Long id, @RequestBody String region){
