@@ -64,6 +64,9 @@ public class SignalController {
 	@GetMapping("/findbyregion")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	public ResponseEntity<List<Signal>> findByRegion(@Param("nomRegion") String nomRegion){
+		if(nomRegion == null){
+			return ResponseEntity.ok(null);
+		}
 		return ResponseEntity.ok(signalRepository.findByRegion(nomRegion));
 	}
 
@@ -134,7 +137,7 @@ public class SignalController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public ResponseEntity<MessageResponse> deleteSignal(@PathVariable Long id){
 		signalRepository.deleteById(id);
 		return ResponseEntity.ok(new MessageResponse("Signal remove successfully"));
