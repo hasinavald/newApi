@@ -92,7 +92,7 @@ public class SignalController {
 	}
 
 	@PutMapping("/client/seenno")
-	@PreAuthorize("hasRole('MODERATOR') or hasRole('USER')")
+	@PreAuthorize("hasRole('MODERATOR') or hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<?> updateSeenByClientno(@Param("id") Long id){
 		signalRepository.updateSeenByClientno(id,0);
 		return ResponseEntity.ok(new MessageResponse("Update successfully"));
