@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
 	@Modifying
 	@Transactional
-	@Query(value = "INSERT INTO roles (id,name) VALUES (1,'ROLE_MODERATOR')", nativeQuery = true)
+	@Query(value = "INSERT INTO roles (id,name) VALUES (2,'ROLE_MODERATOR')", nativeQuery = true)
 	int createSeeder();
 
 }
