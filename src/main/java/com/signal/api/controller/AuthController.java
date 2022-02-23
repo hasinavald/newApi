@@ -34,7 +34,6 @@ import com.signal.api.repository.UserRepository;
 import com.signal.api.security.jwt.JwtUtils;
 import com.signal.api.security.service.UserDetailsImpl;
 import com.signal.api.websocket.SocketHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -54,7 +53,6 @@ public class AuthController{
 
 	@Autowired
 	JwtUtils jwtUtils;
-
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -82,7 +80,7 @@ public class AuthController{
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-		userRepository.createSeeder();
+		
 		if(!isPasswordValid(signUpRequest.getPassword())) {
 			return ResponseEntity.ok(new MessageResponse("Le mots de passe est invalide"));
 		}
@@ -162,10 +160,5 @@ public class AuthController{
 			    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 		return matcher.find();
-	}
-
-	@GetMapping("/createRole")
-	public ResponseEntity<?> createSeeder(){
-		return ResponseEntity.ok(userRepository.createSeeder());
 	}
 }

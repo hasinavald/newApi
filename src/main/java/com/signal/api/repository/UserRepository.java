@@ -25,9 +25,4 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query(value = "UPDATE users SET password = :password WHERE id = :id", nativeQuery = true)
 	int updatePassword(String password,Long id);
 
-	@Modifying
-	@Transactional
-	@Query(value = "INSERT INTO roles (id,name) VALUES (3,'ROLE_USER')", nativeQuery = true)
-	int createSeeder();
-
 }
