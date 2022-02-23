@@ -28,6 +28,9 @@ import com.signal.api.repository.RegionRepository;
 import com.signal.api.repository.SignalRepository;
 import com.signal.api.repository.TypeSignalRepository;
 import com.signal.api.service.FilesStorageService;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -151,6 +154,14 @@ public class SignalController {
 	public ResponseEntity<MessageResponse> deleteSignal(@PathVariable Long id){
 		signalRepository.deleteById(id);
 		return ResponseEntity.ok(new MessageResponse("Signal remove successfully"));
+	}
+
+	@GetMapping("/files/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+		Resource file = storageService.load(filename);
+		return ResponseEntity.ok()
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 	}
 	
 }
