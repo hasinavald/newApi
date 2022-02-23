@@ -15,10 +15,7 @@ public class Signal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Lob
-	@Column(name="image")
-	@Type(type="org.hibernate.type.BinaryType")
-	private byte[] image;
+	private String image;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "type", 
@@ -50,11 +47,11 @@ public class Signal {
         this.id = id;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

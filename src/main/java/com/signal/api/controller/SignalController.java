@@ -27,6 +27,7 @@ import com.signal.api.payload.response.MessageResponse;
 import com.signal.api.repository.RegionRepository;
 import com.signal.api.repository.SignalRepository;
 import com.signal.api.repository.TypeSignalRepository;
+import com.signal.api.service.FilesStorageService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -111,6 +112,9 @@ public class SignalController {
 		signalRepository.updateStatusSignal(status, id);
 		return ResponseEntity.ok(new MessageResponse("Update successfully"));
 	}
+
+	@Autowired
+  	FilesStorageService storageService;
 	
 	@PostMapping("/postsignal")
 	@PreAuthorize("hasRole('USER')")
@@ -125,22 +129,19 @@ public class SignalController {
 			@RequestParam("username") String username
 	) {
 		Signal s = new Signal();
-		
+		storageService.save(file);
+		String filen = file.getOriginalFilename();
 		List<TypeSignal> _type = new ArrayList<TypeSignal>();
 		TypeSignal type = typeSignalRepository.findByType(typeSignal).get();
 		_type.add(type);
-		try {
-			s.setImage(file.getBytes());
-			s.setDescription(description);
-			s.setTypeSignal(_type);
-			s.setLatitude(latitude);
-			s.setLongitude(longitude);
-			s.setStatus(status);
-			s.setDate(date);
-			s.setUsername(username);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		s.setImage(filen);
+		s.setDescription(description);
+		s.setTypeSignal(_type);
+		s.setLatitude(latitude);
+		s.setLongitude(longitude);
+		s.setStatus(status);
+		s.setDate(date);
+		s.setUsername(username);
 	    signalRepository.save(s);
 	    return ResponseEntity.ok(new MessageResponse("Saved successfully"));
 	}
