@@ -123,7 +123,7 @@ public class SignalController {
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	public ResponseEntity<?> updateStatusSignal(@PathVariable("id") Long id, @RequestBody String status){
 		signalRepository.updateStatusSignal(status, id);
-		return ResponseEntity.ok(new MessageResponse("Update successfully"));
+		return ResponseEntity.ok(new MessageResponse("Update successfull;yy"));
 	}
 
 	@Autowired
@@ -146,7 +146,7 @@ public class SignalController {
   
 		  rootLocation = Paths.get("signal_images");
   
-		  String filename = username+"_"+timeStamp+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+		  String filename = username+"_"+timeStamp+"_"+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
 		  try {
 			  Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
 					  StandardCopyOption.REPLACE_EXISTING);
